@@ -53,16 +53,18 @@ namespace Xdit
 
             //_textView.Text = System.IO.File.ReadAllText (@"D:\Developing\C#\Under Developing\Xdit\Program.cs");
 
-
+            // run Terminl_gui 
             Application.Run();
+
+            // Reset Terminal after program closed so the terminal will not be messy 
             ResetEnvirment();
 
 
-        }
+        }// End of Main
 
         static void beeper(){
             Console.Beep();
-        }
+        }// will be deleted no use maybe some use
 
         private static void Quit ()
 		{
@@ -88,6 +90,11 @@ namespace Xdit
             if (platform == Platforms.linux)
             {
                 Process.Start("/bin/reset","");
+            }
+            else 
+            if (platform == Platforms.Windows)
+            {
+                Console.Clear(); // no use but do it.
             }
         }// End of ResetEnvirment method
 
