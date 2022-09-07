@@ -1,5 +1,6 @@
 using System;
 using Terminal.Gui;
+using System.Diagnostics;
 
 namespace Xdit
 {
@@ -10,8 +11,12 @@ namespace Xdit
 
         private static StatusBar StatBar;
 
+        private static Platforms platform; 
+
         static void Main(string[] args)
         {
+            OsLook();
+
             Application.Init();
 
             Toplevel top = Application.Top;
@@ -46,10 +51,13 @@ namespace Xdit
             win.Add(_textView);
             top.Add(StatBar);
 
-            _textView.Text = System.IO.File.ReadAllText (@"D:\Developing\C#\Under Developing\Xdit\Program.cs");
+            //_textView.Text = System.IO.File.ReadAllText (@"D:\Developing\C#\Under Developing\Xdit\Program.cs");
 
 
             Application.Run();
+            ResetEnvirment();
+
+
         }
 
         static void beeper(){
@@ -58,8 +66,38 @@ namespace Xdit
 
         private static void Quit ()
 		{
+            //Environment.Exit(0);
 			Application.RequestStop ();
 		}
+
+        // Check for which platform(Os, kernel) are used.  
+        private static void OsLook()
+        {
+           if (OperatingSystem.IsWindows())
+            {
+                platform = Platforms.Windows;
+            }
+           else
+            {
+                platform = Platforms.linux;
+            }
+        }// end of OsLook Method.
         
-    }
-}
+        private static void ResetEnvirment()
+        {
+            if (platform == Platforms.linux)
+            {
+                Process.Start("/bin/reset","");
+            }
+        }// End of ResetEnvirment method
+
+
+    }// end of class Programm
+
+    enum Platforms
+        {
+            Windows = 1,
+            linux,
+        }// end of Platforms enumerator
+        
+}// end of namespcae Xdit
