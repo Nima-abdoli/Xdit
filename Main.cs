@@ -12,12 +12,13 @@ namespace Xdit
         private static StatusBar StatBar;
 
         private static Platforms platform; 
-        private static string FileLocation;
-        private static string appCurrentPlace;
+
+        static private FileHandling file;
 
         static void Main(string[] args)
         {
             OsLook();
+            file = new FileHandling(args);
 
             Application.Init();
 
@@ -26,7 +27,7 @@ namespace Xdit
             ColorScheme colorScheme = new ColorScheme();
             colorScheme = Colors.TopLevel;
 
-            Window win = new Window("XDIT v0.0.1"){
+            Window win = new Window("XDIT v0.2.1"){
                 X = 0 ,
                 Y = 0 ,
                 ColorScheme = colorScheme,
@@ -53,18 +54,24 @@ namespace Xdit
             win.Add(_textView);
             top.Add(StatBar);
 
-            _textView.Text = System.IO.File.ReadAllText (args[0]);
+            if (file.FileLocation != null)
+            {
+                _textView.Text = System.IO.File.ReadAllText (file.FileLocation);
+            }
 
+            
+            
             // run Terminl_gui 
             Application.Run();
 
             // Reset Terminal after program closed so the terminal will not be messy 
-            //ResetEnvirment();
-            System.Console.WriteLine();
-            System.Console.WriteLine(args[0]);
-            System.Console.WriteLine();
-            System.Console.WriteLine(Environment.CurrentDirectory);
-
+            ResetEnvirment();
+            
+            System.Console.WriteLine("------------------------------------------");
+            System.Console.WriteLine(" File Location : "+file.FileLocation);
+            System.Console.WriteLine("------");
+            System.Console.WriteLine(" Working Directory : " + file.WorkingDirectory);
+            System.Console.WriteLine("------");
 
         }// End of MainClasss
 
@@ -107,10 +114,4 @@ namespace Xdit
 
     }// end of class Main
 
-
-    enum Platforms
-        {
-            Windows = 1,
-            linux,
-        }// end of Platforms enumerator
 }// end of namespcae Xdit
