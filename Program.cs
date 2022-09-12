@@ -13,6 +13,7 @@ namespace Xdit
 
         private static Platforms platform; 
         private static string FileLocation;
+        private static string appCurrentPlace;
 
         static void Main(string[] args)
         {
@@ -58,7 +59,11 @@ namespace Xdit
             Application.Run();
 
             // Reset Terminal after program closed so the terminal will not be messy 
-            ResetEnvirment();
+            //ResetEnvirment();
+            System.Console.WriteLine();
+            System.Console.WriteLine(args[0]);
+            System.Console.WriteLine();
+            System.Console.WriteLine(Environment.CurrentDirectory);
 
 
         }// End of Main
