@@ -12,6 +12,7 @@ namespace Xdit
         private static StatusBar StatBar;
 
         private static Platforms platform; 
+        private static string FileLocation;
 
         static void Main(string[] args)
         {
@@ -51,7 +52,7 @@ namespace Xdit
             win.Add(_textView);
             top.Add(StatBar);
 
-            //_textView.Text = System.IO.File.ReadAllText (@"D:\Developing\C#\Under Developing\Xdit\Program.cs");
+            _textView.Text = System.IO.File.ReadAllText (args[0]);
 
             // run Terminl_gui 
             Application.Run();
