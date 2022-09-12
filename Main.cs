@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Xdit
 {
-    class Program
+    public class MainClasss
     {
 
         private static TextView _textView;
@@ -66,7 +66,7 @@ namespace Xdit
             System.Console.WriteLine(Environment.CurrentDirectory);
 
 
-        }// End of Main
+        }// End of MainClasss
 
         static void beeper(){
             Console.Beep();
@@ -105,12 +105,12 @@ namespace Xdit
         }// End of ResetEnvirment method
 
 
-    }// end of class Programm
+    }// end of class Main
+
 
     enum Platforms
         {
             Windows = 1,
             linux,
         }// end of Platforms enumerator
-        
 }// end of namespcae Xdit
