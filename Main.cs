@@ -6,18 +6,20 @@ namespace Xdit
 {
     public class MainClasss
     {
-
+        static string StrForTextView = "";
         private static TextView _textView;
 
         private static StatusBar StatBar;
 
-        private static Platforms platform; 
+        private static Platforms _platform = new Platforms();
+        private static string Os;
+        private static PlatformsEnum _platformsEnum;
 
         static private FileHandling file;
 
         static void Main(string[] args)
         {
-            OsLook();
+            _platformsEnum = _platform.OsLook();
             file = new FileHandling(args);
 
             Application.Init();
@@ -54,13 +56,14 @@ namespace Xdit
             win.Add(_textView);
             top.Add(StatBar);
 
+            StrForTextView = file.FileLocation + "\n" + args[0];
+
             if (file.FileLocation != null)
             {
-                _textView.Text = System.IO.File.ReadAllText (file.FileLocation);
+                //_textView.Text = System.IO.File.ReadAllText (file.FileLocation);
+                _textView.Text = StrForTextView;
             }
 
-            
-            
             // run Terminl_gui 
             Application.Run();
 
@@ -72,6 +75,7 @@ namespace Xdit
             System.Console.WriteLine("------");
             System.Console.WriteLine(" Working Directory : " + file.WorkingDirectory);
             System.Console.WriteLine("------");
+            System.Console.WriteLine("Platform : " + Os);
 
         }// End of MainClasss
 
@@ -84,30 +88,19 @@ namespace Xdit
             //Environment.Exit(0);
 			Application.RequestStop ();
 		}
-
-        // Check for which platform(Os, kernel) are used.  
-        private static void OsLook()
-        {
-           if (OperatingSystem.IsWindows())
-            {
-                platform = Platforms.Windows;
-            }
-           else
-            {
-                platform = Platforms.linux;
-            }
-        }// end of OsLook Method.
         
         private static void ResetEnvirment()
         {
-            if (platform == Platforms.linux)
+            if (_platformsEnum == PlatformsEnum.linux)
             {
                 Process.Start("/bin/reset","");
+                Os = "linux";
             }
             else 
-            if (platform == Platforms.Windows)
+            if (_platformsEnum == PlatformsEnum.Windows)
             {
                 Console.Clear(); // no use but do it.
+                Os = "windows";
             }
         }// End of ResetEnvirment method
 
