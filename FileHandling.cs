@@ -16,6 +16,9 @@ namespace Xdit
         // Save the path of directory where app called from terminal.
         public string WorkingDirectory{get; set;}
 
+        //get file text
+        public string FileText{get; set;}
+
         #endregion end Public Property
 
         #region Private Property
@@ -41,6 +44,8 @@ namespace Xdit
                 ArgsIn = args;
                 // path to the file.
                 FileLocation = WorkingDirectory + fileNameTrim(ArgsIn[0]);
+
+                FileText = openFile();
             }
         }// end of FileHandling Constructor.
 
@@ -50,6 +55,17 @@ namespace Xdit
         {
                 return fileName.Trim('.');
         }// end of fileNameTrim  
+
+        // read text from file.
+        public string openFile()
+        {
+            return File.ReadAllText(FileLocation);
+        }
+
+        public void SaveFile(string TextToSave)
+        {
+            File.WriteAllText(WorkingDirectory + "\testFile.txt",TextToSave);
+        }
 
     }// end of FileHandling Class
 }// end of Xdit Namespace

@@ -14,6 +14,9 @@ namespace Xdit
         // instance of Textview from Terminal gui library
         private static TextView _textView;
 
+        // Keep App Version
+        private static string AppVesrion = "0.2.1";
+
         // instance of Statusbar from Terminal gui library
         private static StatusBar StatBar;
 
@@ -33,6 +36,8 @@ namespace Xdit
         #region Main Function
         static void Main(string[] args)
         {
+            Console.Title = "Xdit " + AppVesrion;
+
             _platformsEnum = _platform.OsLook();
             file = new FileHandling(args);
 
@@ -43,7 +48,7 @@ namespace Xdit
             ColorScheme colorScheme = new ColorScheme();
             colorScheme = Colors.TopLevel;
 
-            Window win = new Window("XDIT v0.2.1"){
+            Window win = new Window(@"XDIT " + AppVesrion){
                 X = 0 ,
                 Y = 0 ,
                 ColorScheme = colorScheme,
@@ -52,7 +57,7 @@ namespace Xdit
             };
 
             StatBar = new StatusBar(new StatusItem[] {
-                new StatusItem(Key.F2,"~F2~ Save",() => beeper()),
+                new StatusItem(Key.F2,"~F2~ Save",() => SaveFile()),
                 new StatusItem(Key.F3,"~F3~ nothing",() => beeper()),
                 new StatusItem(Key.F4,"~F4~ Exit",() => Quit()),
             });
@@ -70,41 +75,42 @@ namespace Xdit
             win.Add(_textView);
             top.Add(StatBar);
 
-            StrForTextView = file.FileLocation + "\n" + args[0];
+            //StrForTextView = file.FileLocation + "\n" + args[0];
 
             if (file.FileLocation != null)
             {
                 //_textView.Text = System.IO.File.ReadAllText (file.FileLocation);
-                _textView.Text = StrForTextView;
+                _textView.Text = file.FileText;
             }
 
             // run Terminl_gui 
             Application.Run();
 
-            // Reset Terminal after program closed so the terminal will not be messy 
+            // Reset Terminal after program closed so the terminal will not be messy
+            // mostly used in linux version
             ResetEnvirment();
             
-            System.Console.WriteLine("------------------------------------------");
-            System.Console.WriteLine(" File Location : "+file.FileLocation);
-            System.Console.WriteLine("------");
-            System.Console.WriteLine(" Working Directory : " + file.WorkingDirectory);
-            System.Console.WriteLine("------");
-            System.Console.WriteLine("Platform : " + Os);
+            // show file path info
+            InfoFunction();
 
         }// End of MainClasss
         #endregion end main
         
         #region Misc Function
+
         static void beeper(){
             Console.Beep();
         }// will be deleted no use maybe some use
 
+        // closed program.
         private static void Quit ()
 		{
             //Environment.Exit(0);
 			Application.RequestStop ();
 		}
-        
+
+        // Clean terminal after app closed. some bug in app or library that linux version terminal will be messy
+        // it's not good solution but this is it for now.        
         private static void ResetEnvirment()
         {
             if (_platformsEnum == PlatformsEnum.linux)
@@ -119,7 +125,25 @@ namespace Xdit
                 Os = "windows";
             }
         }// End of ResetEnvirment method
+
         #endregion End Misc Function
+
+        static void SaveFile()
+        {
+            file.SaveFile(_textView.Text.ToString());
+        }
+
+        //TODO : will Be deleted
+        // just write some info in console for developing time 
+        static void InfoFunction()
+        {
+            System.Console.WriteLine("------------------------------------------");
+            System.Console.WriteLine(" File Location : "+file.FileLocation);
+            System.Console.WriteLine("------");
+            System.Console.WriteLine(" Working Directory : " + file.WorkingDirectory);
+            System.Console.WriteLine("------");
+            System.Console.WriteLine("Platform : " + Os);
+        }// end of Infofunction
 
     }// end of class Main
 
