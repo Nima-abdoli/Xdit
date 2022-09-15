@@ -6,17 +6,31 @@ namespace Xdit
 {
     public class MainClasss
     {
+        #region Private property and variable
+        
+        // opened file save in this var
         static string StrForTextView = "";
+
+        // instance of Textview from Terminal gui library
         private static TextView _textView;
 
+        // instance of Statusbar from Terminal gui library
         private static StatusBar StatBar;
 
+        // instance of platform class to determine os and platform that app run in.
         private static Platforms _platform = new Platforms();
+        
+        // get the name of platform from platform class that send enum and enum. can use better design maybe be deleted in future.
         private static string Os;
+
+        // instance for platform enum 
         private static PlatformsEnum _platformsEnum;
 
+        // instance of FileHandling class that open, save , write and ... files
         static private FileHandling file;
-
+        #endregion end Private property
+        
+        #region Main Function
         static void Main(string[] args)
         {
             _platformsEnum = _platform.OsLook();
@@ -78,7 +92,9 @@ namespace Xdit
             System.Console.WriteLine("Platform : " + Os);
 
         }// End of MainClasss
-
+        #endregion end main
+        
+        #region Misc Function
         static void beeper(){
             Console.Beep();
         }// will be deleted no use maybe some use
@@ -103,7 +119,7 @@ namespace Xdit
                 Os = "windows";
             }
         }// End of ResetEnvirment method
-
+        #endregion End Misc Function
 
     }// end of class Main
 
