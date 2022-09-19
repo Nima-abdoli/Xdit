@@ -154,6 +154,7 @@ namespace Xdit
             LogEnding("Platform : " + Os);
         }// end of Infofunction
 
+#if DEBUG
         // TODO : This will be deleted 
         // show logs that collected in entire app at the app lcosing.
         static public void LogEnding(String log)
@@ -162,5 +163,7 @@ namespace Xdit
         }
 
     }// end of class Main
+
+#endif
 
 }// end of namespcae Xdit
