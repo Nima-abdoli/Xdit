@@ -29,6 +29,12 @@ namespace Xdit
         // make sure that working directory is in top of directories hierarchy or not. for complaication may occur in diffrent path format in diffrent platform 
         public bool IsRoot; 
 
+        //instance of platform class to determine os and platform that app run in.
+        private Platforms _platform = new Platforms();
+
+        // instance for platform enum
+        private PlatformsEnum _platfromsEnum;
+
         #endregion end Private Property
         
         // constructor to get argument from terminal(entry) and handle all diffrent scenario that will happend to entry argument.
@@ -36,6 +42,9 @@ namespace Xdit
         {
             // get the directory of where app called or run.
             WorkingDirectory = Environment.CurrentDirectory;
+
+            // Check for Platfrom Type
+            _platfromsEnum = _platform.OsLook();
             
             // check if there is argument in array.
             if (args.Length != 0)
@@ -53,7 +62,19 @@ namespace Xdit
         // trim the file path. windows use format like this {.\file.ext} thepoint must be deleted. linux handle it in other way.
         string fileNameTrim(string fileName)
         {
+            if (_platfromsEnum == PlatformsEnum.Windows)
+            {
                 return fileName.Trim('.');
+            }
+            else if (_platfromsEnum == PlatformsEnum.linux)
+            {
+                return  "/" + fileName;
+            }
+            else
+            {
+                return null;
+            }
+                
         }// end of fileNameTrim  
 
         // read text from file.
@@ -64,8 +85,18 @@ namespace Xdit
 
         public void SaveFile(string TextToSave)
         {
-            Mainc.LogEnding(WorkingDirectory + @"\testFile.txt");
-            File.WriteAllText(WorkingDirectory + @"\testFile.txt",TextToSave);
+            Mainc.LogEnding("From FileHandling * " + WorkingDirectory + @"\testFile.txt");
+            Mainc.LogEnding("From FileHandling ** " + FileLocation);
+            //Mainc.LogEnding("Args handl *** " + ArgsIn[0]);
+
+            if (_platfromsEnum == PlatformsEnum.Windows)
+            {
+                File.WriteAllText(WorkingDirectory + @"\testFile.txt",TextToSave);
+            }
+            else if (_platfromsEnum == PlatformsEnum.linux)
+            {
+                File.WriteAllText(WorkingDirectory + @"/testFile.txt",TextToSave);
+            }
         }
 
     }// end of FileHandling Class

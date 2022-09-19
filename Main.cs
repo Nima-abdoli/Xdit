@@ -30,9 +30,6 @@ namespace Xdit
         // instance for platform enum 
         private static PlatformsEnum _platformsEnum;
 
-        // hold the collected logs
-        private static string SavedLogs = "";
-
         // instance of FileHandling class that open, save , write and ... files
         static private FileHandling file;
         #endregion end Private property
@@ -143,15 +140,18 @@ namespace Xdit
         // just write some info in console for developing time 
         static void InfoFunction()
         {
-            System.Console.WriteLine("------------------------------------------");
-            System.Console.WriteLine(" File Location : "+file.FileLocation);
-            LogEnding(" File Location : "+file.FileLocation);
-            System.Console.WriteLine("------");
+            System.Console.WriteLine("***********************************************");
+            System.Console.WriteLine(" File Location : " + file.FileLocation);
+            LogEnding(@" File Location : " + file.FileLocation);
+
+            System.Console.WriteLine("*******");
             System.Console.WriteLine(" Working Directory : " + file.WorkingDirectory);
-            LogEnding(" Working Directory : " + file.WorkingDirectory);
-            System.Console.WriteLine("------");
-            System.Console.WriteLine("Platform : " + Os);
-            LogEnding("Platform : " + Os);
+            LogEnding(@" Working Directory : " + file.WorkingDirectory);
+
+            System.Console.WriteLine("*******");
+            System.Console.WriteLine(" Platform : " + Os);
+            LogEnding(@" Platform : " + Os);
+
         }// end of Infofunction
 
 #if DEBUG
@@ -159,11 +159,18 @@ namespace Xdit
         // show logs that collected in entire app at the app lcosing.
         static public void LogEnding(String log)
         {
-            File.AppendAllText(file.WorkingDirectory + @"\LogFile.txt",log + "\n");
+            if (_platformsEnum == PlatformsEnum.Windows)
+            {
+                File.AppendAllText(file.WorkingDirectory + @"\LogFile.txt", " ~ " + log + "\n");
+            }
+            else if (_platformsEnum == PlatformsEnum.linux)
+            {
+                File.AppendAllText(file.WorkingDirectory + @"/LogFile.txt", " ~ " + log + "\n");
+            }
         }
 
     }// end of class Main
 
-#endif
+#endif    
 
 }// end of namespcae Xdit
