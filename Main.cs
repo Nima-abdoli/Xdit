@@ -1,10 +1,11 @@
 using System;
 using Terminal.Gui;
 using System.Diagnostics;
+using System.IO;
 
 namespace Xdit
 {
-    public class MainClasss
+    public class Mainc
     {
         #region Private property and variable
         
@@ -28,6 +29,9 @@ namespace Xdit
 
         // instance for platform enum 
         private static PlatformsEnum _platformsEnum;
+
+        // hold the collected logs
+        private static string SavedLogs = "";
 
         // instance of FileHandling class that open, save , write and ... files
         static private FileHandling file;
@@ -92,6 +96,8 @@ namespace Xdit
             
             // show file path info
             InfoFunction();
+            LogEnding("/AppEnd");
+
 
         }// End of MainClasss
         #endregion end main
@@ -139,11 +145,21 @@ namespace Xdit
         {
             System.Console.WriteLine("------------------------------------------");
             System.Console.WriteLine(" File Location : "+file.FileLocation);
+            LogEnding(" File Location : "+file.FileLocation);
             System.Console.WriteLine("------");
             System.Console.WriteLine(" Working Directory : " + file.WorkingDirectory);
+            LogEnding(" Working Directory : " + file.WorkingDirectory);
             System.Console.WriteLine("------");
             System.Console.WriteLine("Platform : " + Os);
+            LogEnding("Platform : " + Os);
         }// end of Infofunction
+
+        // TODO : This will be deleted 
+        // show logs that collected in entire app at the app lcosing.
+        static public void LogEnding(String log)
+        {
+            File.AppendAllText(file.WorkingDirectory + @"\LogFile.txt",log + "\n");
+        }
 
     }// end of class Main
 

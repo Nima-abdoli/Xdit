@@ -64,7 +64,8 @@ namespace Xdit
 
         public void SaveFile(string TextToSave)
         {
-            File.WriteAllText(WorkingDirectory + "\testFile.txt",TextToSave);
+            Mainc.LogEnding(WorkingDirectory + @"\testFile.txt");
+            File.WriteAllText(WorkingDirectory + @"\testFile.txt",TextToSave);
         }
 
     }// end of FileHandling Class
