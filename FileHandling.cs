@@ -8,35 +8,15 @@ namespace Xdit
     public class FileHandling
     {
 
-        #region Public Property
+        public string FileLocation{get; set;}       // Save Complete location of file based on platform
+        public string WorkingDirectory{get; set;}       // Save the path of directory where app called from terminal.
+        public string FileText{get; set;}       //get file text
 
-        // Save Complete location of file based on platform
-        public string FileLocation{get; set;}
+        private string[] ArgsIn{get; set;}      // save argument thay come to app
+        public bool IsRoot;     // make sure that working directory is in top of directories hierarchy or not. for complaication may occur in diffrent path format in diffrent platform 
+        private Platforms _platform = new Platforms();      //instance of platform class to determine os and platform that app run in.
+        private PlatformsEnum _platfromsEnum;       // instance for platform enum
 
-        // Save the path of directory where app called from terminal.
-        public string WorkingDirectory{get; set;}
-
-        //get file text
-        public string FileText{get; set;}
-
-        #endregion end Public Property
-
-        #region Private Property
-
-        // save argument thay come to app
-        private string[] ArgsIn{get; set;}
-
-        // make sure that working directory is in top of directories hierarchy or not. for complaication may occur in diffrent path format in diffrent platform 
-        public bool IsRoot; 
-
-        //instance of platform class to determine os and platform that app run in.
-        private Platforms _platform = new Platforms();
-
-        // instance for platform enum
-        private PlatformsEnum _platfromsEnum;
-
-        #endregion end Private Property
-        
         // constructor to get argument from terminal(entry) and handle all diffrent scenario that will happend to entry argument.
         public FileHandling(string[] args)
         {

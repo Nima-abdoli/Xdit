@@ -7,32 +7,15 @@ namespace Xdit
 {
     public class Mainc
     {
-        #region Private property and variable
         
-        // opened file save in this var
-        static string StrForTextView = "";
-
-        // instance of Textview from Terminal gui library
-        private static TextView _textView;
-
-        // Keep App Version
-        private static string AppVesrion = "0.2.1";
-
-        // instance of Statusbar from Terminal gui library
-        private static StatusBar StatBar;
-
-        // instance of platform class to determine os and platform that app run in.
-        private static Platforms _platform = new Platforms();
-        
-        // get the name of platform from platform class that send enum and enum. can use better design maybe be deleted in future.
-        private static string Os;
-
-        // instance for platform enum 
-        private static PlatformsEnum _platformsEnum;
-
-        // instance of FileHandling class that open, save , write and ... files
-        static private FileHandling file;
-        #endregion end Private property
+        static string StrForTextView = "";      // opened file save in this var
+        private static TextView _textView;      // instance of Textview from Terminal gui library
+        private static string AppVesrion = "0.2.1";     // Keep App Version
+        private static StatusBar StatBar;       // instance of Statusbar from Terminal gui library
+        private static Platforms _platform = new Platforms();       // instance of platform class to determine os and platform that app run in.
+        private static string Os;       // get the name of platform from platform class that send enum and enum. can use better design maybe be deleted in future.
+        private static PlatformsEnum _platformsEnum;        // instance for platform enum
+        static private FileHandling file;       // instance of FileHandling class that open, save , write and ... files
         
         #region Main Function
         static void Main(string[] args)
@@ -62,7 +45,6 @@ namespace Xdit
                 new StatusItem(Key.F3,"~F3~ nothing",() => beeper()),
                 new StatusItem(Key.F4,"~F4~ Exit",() => Quit()),
             });
-
 
             _textView = new TextView () {
                 X = 0,
